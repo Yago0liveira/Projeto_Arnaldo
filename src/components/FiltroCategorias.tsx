@@ -1,20 +1,20 @@
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
-import { CORES } from '@/constants/tema';
-interface FiltroCategoriasProps {
+import { Pressable, ScrollView, Text } from 'react-native';
+ interface FiltroCategoriasProps {
  categorias: string[];
  selecionada: string;
  aoSelecionar: (categoria: string) => void;
-}
-export function FiltroCategorias({
+ }
+ export function FiltroCategorias({
  categorias,
  selecionada,
  aoSelecionar,
-}: FiltroCategoriasProps) {
+ }: FiltroCategoriasProps) {
  return (
  <ScrollView
  horizontal
+ className="grow-0"
  showsHorizontalScrollIndicator={false}
- contentContainerStyle={styles.linha}
+ contentContainerClassName="flex-row items-start gap-2 py-1"
  >
  {categorias.map((categoria) => {
  const ativa = categoria === selecionada;
@@ -24,9 +24,19 @@ export function FiltroCategorias({
  onPress={() => aoSelecionar(categoria)}
  accessibilityRole="button"
  accessibilityLabel={`Filtrar por ${categoria}`}
- style={[styles.chip, ativa && styles.chipAtivo]}
+ className={`px-4 py-2.5 rounded-full active:opacity-60 ${
+ ativa
+ ? 'bg-sky-600 dark:bg-destaque'
+ : 'bg-slate-200 dark:bg-superficie'
+ }`}
  >
- <Text style={[styles.texto, ativa && styles.textoAtivo]}>
+ <Text
+ className={
+ ativa
+ ? 'text-white dark:text-fundo text-[13px] font-bold'
+ : 'text-slate-600 dark:text-suave text-[13px]'
+ }
+ >
  {categoria}
  </Text>
  </Pressable>
@@ -34,16 +44,4 @@ export function FiltroCategorias({
  })}
  </ScrollView>
  );
-}
-const styles = StyleSheet.create({
- linha: { flexDirection: 'row', gap: 8, paddingVertical: 4 },
- chip: {
- paddingHorizontal: 14,
- paddingVertical: 10,
- borderRadius: 999,
- backgroundColor: CORES.superficie,
- },
- chipAtivo: { backgroundColor: CORES.destaque },
- texto: { color: CORES.textoSuave, fontSize: 13 },
- textoAtivo: { color: CORES.fundo, fontWeight: 'bold' },
-});
+ }
